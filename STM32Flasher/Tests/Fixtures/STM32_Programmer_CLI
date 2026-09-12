@@ -1,0 +1,32 @@
+#!/bin/zsh
+
+if [[ "$*" == *"-l stlink"* ]]; then
+  print "===== STLink Interface ====="
+  print "Total number of available STM32 device in debug mode: 1"
+  print "ST-LINK SN  : 1234567890ABCDEF"
+  print "ST-LINK FW  : V2J45S7"
+  print "Board       : ST-LINK/V2"
+  exit 0
+fi
+
+if [[ "$*" == *"-d "* ]]; then
+  print "ST-LINK SN  : 1234567890ABCDEF"
+  print "Device ID   : 0x410"
+  print "Device name : STM32F101/F102/F103 Medium-density"
+  print "Erasing memory corresponding to segment 0:"
+  print "Download in Progress:"
+  print "File download complete"
+  print "Download verified successfully"
+  print "Software reset is performed"
+  exit 0
+fi
+
+if [[ "$*" == *"-c "* ]]; then
+  print "ST-LINK SN  : 1234567890ABCDEF"
+  print "Device ID   : 0x410"
+  print "Device name : STM32F101/F102/F103 Medium-density"
+  exit 0
+fi
+
+print "Error: unsupported fake command" >&2
+exit 2
