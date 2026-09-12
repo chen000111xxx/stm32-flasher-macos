@@ -18,7 +18,7 @@ verification_app="$verification_root/STM32 烧录器.app"
 
 trap 'rm -rf "$test_module_cache" "$folder_test" "$editor_test" "$clipboard_test" "$icon_test_root" "$verification_root"' EXIT
 
-"$project_dir/build.sh"
+zsh "$project_dir/build.sh"
 ditto --norsrc "$app_path" "$verification_app"
 
 signature_is_valid=false
