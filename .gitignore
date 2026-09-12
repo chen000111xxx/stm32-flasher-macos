@@ -1,0 +1,21 @@
+.DS_Store
+STM32Flasher/build/
+STM32Flasher/Assets/IconCandidates/
+
+# Local build and test output
+/build/
+/output/
+/outputs/
+/photo_outputs/
+/recovery/
+/tmp/
+/work/
+
+# Local handoff notes and private agent instructions
+/STM32_烧录器_AI交接说明.md
+**/AGENTS.md
+
+# Xcode / Swift local state
+DerivedData/
+*.xcuserstate
+xcuserdata/
