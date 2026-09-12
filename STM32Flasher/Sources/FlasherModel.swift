@@ -496,7 +496,7 @@ final class FlasherModel: ObservableObject {
                 url = directURL
             }
             guard let url else { return }
-            Task { @MainActor in
+            Task { @MainActor [weak self] in
                 self?.selectFirmware(url)
             }
         }
@@ -2051,6 +2051,7 @@ final class FlasherModel: ObservableObject {
         for includeDirectory in uniqueIncludeDirectories {
             commonFlags += ["-I", includeDirectory.path]
         }
+        let buildFlags = commonFlags
 
         let buildID = UUID()
         let processController = ProcessController()
@@ -2077,7 +2078,7 @@ final class FlasherModel: ObservableObject {
                     let objectURL = workspace.appendingPathComponent("\(index)_\(safeName).o")
                     let result = Self.executeCommand(
                         compilerURL,
-                        commonFlags + ["-c", sourceURL.path, "-o", objectURL.path],
+                        buildFlags + ["-c", sourceURL.path, "-o", objectURL.path],
                         controller: processController
                     )
                     combinedOutput.append("$ Compile \(sourceURL.lastPathComponent)\n\(result.output)\n")
@@ -2103,7 +2104,7 @@ final class FlasherModel: ObservableObject {
 
                 let startupResult = Self.executeCommand(
                     compilerURL,
-                    commonFlags + ["-c", startupURL.path, "-o", startupObjectURL.path],
+                    buildFlags + ["-c", startupURL.path, "-o", startupObjectURL.path],
                     controller: processController
                 )
                 combinedOutput.append("$ 编译 startup\n\(startupResult.output)\n")
@@ -2125,7 +2126,7 @@ final class FlasherModel: ObservableObject {
                     return
                 }
 
-                let linkArguments = commonFlags + [
+                let linkArguments = buildFlags + [
                     "-T", linkerURL.path,
                     "-nostdlib",
                     "-Wl,--gc-sections",
